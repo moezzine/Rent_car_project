@@ -9,7 +9,7 @@
   <meta name="keyword" content="Creative, Dashboard, Admin, Template, Theme, Bootstrap, Responsive, Retina, Minimal">
   <link rel="shortcut icon" href="img/favicon.png">
 
-  <title>Country</title>
+  <title>Vehicule Type</title>
 
   <!-- Bootstrap CSS -->
   <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -41,7 +41,6 @@
 <body>
   <!-- container section start -->
   <section id="container" class="">
-
     <!--header start-->
 
     <header class="header dark-bg">
@@ -269,7 +268,7 @@
           <li class="dropdown">
             <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                             <span class="profile-ava">
-                         <img alt="" th:src="@{'/img/photo/'+${#authentication.getPrincipal().getUsername()}+'.jpg'}" height="40" WIDTH="40">
+                            <img alt="" th:src="@{'/img/photo/'+${#authentication.getPrincipal().getUsername()}+'.jpg'}" height="40" WIDTH="40">
                             </span>
                 <span class="username" th:text="${#authentication.getPrincipal().getUsername()}">Guest</span>
                             <b class="caret"></b>
@@ -338,9 +337,9 @@
                           <span class="menu-arrow arrow_carrot-right"></span>
                       </a>
                       <ul class="sub">
-                          <li><a class="" th:href="@{/vehiculeMake}">Vehicle Make</a></li>
-                          <li><a class="" th:href="@{/vehiculeType}">Vehicle Types</a></li>
-                          <li><a class="" th:href="@{/vehiculeModel}">Vehicle Models</a></li>
+                          <li><a class="" th:href="@{/vehiculeMakes}">Vehicle Make</a></li>
+                          <li><a class="" th:href="@{/vehiculeTypes}">Vehicle Types</a></li>
+                          <li><a class="" th:href="@{/vehiculeModels}">Vehicle Models</a></li>
                           <li><a class="" th:href="@{/vehiculeStatus}">Status Value</a></li>
                       </ul>
                   </li>
@@ -365,8 +364,8 @@
                           <span class="menu-arrow arrow_carrot-right"></span>
                       </a>
                       <ul class="sub">
-                          <li><a class="" th:href="@{/jobTitle}"> Job Title</a></li>
-                          <li><a class="" th:href="@{/employeeType}">Employee Types</a></li>
+                          <li><a class="" th:href="@{/jobTitles}"> Job Title</a></li>
+                          <li><a class="" th:href="@{/employeeTypes}">Employee Types</a></li>
                       </ul>
                   </li>
                   <li class="sub-menu">
@@ -414,36 +413,33 @@
         <!-- page start-->
           <div class="row">
               <div class="col-lg-12">
-                  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addModal">New Country</button>
+                  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addModal">New Vehicule Type</button>
                   <table class="table">
-              <thead>
-              <tr>
-                  <th>Id</th>
-                  <th>Description</th>
-                  <th>Capital</th>
-                  <th>Code</th>
-                  <th>Actions</th>
-              </tr>
-              </thead>
-              <tbody>
-              <tr th:each="c:${countries}">
-                  <td th:text="${c.id}"></td>
-                  <td th:text="${c.description}"></td>
-                  <td th:text="${c.capital}"></td>
-                  <td th:text="${c.code}"></td>
-                  <td class="btn-group">
-                      <a th:href="@{countries/findById/(id=${c.id})}" class="btn btn-primary" id="editButton"><i class="icon_pencil-edit"></i></a>
-                  </td>
-                  <td class="btn-group">
-                      <a   class="btn btn-success" id="detailsButton"><i class="icon_document_alt"></i></a>
-                  </td>
-                  <td class="btn-group">
-                      <a th:href="@{countries/delete/(id=${c.id})}"  class="btn btn-danger" id="deleteButton"><i class="icon_close_alt2"></i></a>
-                  </td>
-
-              </tr>
-              </tbody>
-          </table>
+                      <thead>
+                      <tr>
+                          <th>Id</th>
+                          <th>Description</th>
+                          <th>Details</th>
+                          <th>Actions</th>
+                      </tr>
+                      </thead>
+                      <tbody>
+                      <tr th:each="v:${role}">
+                          <td th:text="${v.id}"></td>
+                          <td th:text="${v.description}"></td>
+                          <td th:text="${v.details}"></td>
+                          <td class="btn-group">
+                              <a th:href="@{role/findById/(id=${v.id})}" class="btn btn-primary" id="editButtonrole"><i class="icon_pencil-edit"></i></a>
+                          </td>
+                          <td class="btn-group">
+                              <a  th:href="@{role/findById/(id=${v.id})}" class="btn btn-success" id="detailsButtonrole"><i class="icon_document_alt"></i></a>
+                          </td>
+                          <td class="btn-group">
+                              <a th:href="@{role/delete/(id=${v.id})}"  class="btn btn-danger" id="deleteButtonrole"><i class="icon_close_alt2"></i></a>
+                          </td>
+                      </tr>
+                      </tbody>
+                  </table>
               </div>
           </div>
         <!-- page end-->
@@ -462,90 +458,7 @@
         </div>
     </div>
   </section>
-  <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
-          <div class="modal-content">
-              <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabel">New Country</h5>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-              </div>
-              <div class="modal-body">
-                  <form th:action="@{/countries/addnew}"  method="post">
-                      <div class="form-group">
-                          <label for="description" class="col-form-label">Description:</label>
-                          <input type="text" class="form-control" id="description" name="description">
-                      </div>
-                      <div class="form-group">
-                          <label for="capital" class="col-form-label">Capital:</label>
-                          <input type="text" class="form-control" id="capital" name="capital">
-                      </div>
-                      <div class="form-group">
-                          <label for="code" class="col-form-label">Code:</label>
-                          <input type="text" class="form-control" id="code" name="code" required pattern="[A-Za-z]{3,10}">
-                      </div>
-                      <div class="form-group">
-                          <label for="nationality" class="col-form-label">Nationality:</label>
-                          <input type="text" class="form-control" id="nationality" name="nationality">
-                      </div>
-                      <div class="form-group">
-                          <label for="continent" class="col-form-label">Continent:</label>
-                          <input type="text" class="form-control" id="continent" name="continent">
-                      </div>
-                      <div class="form-group">
-                      <button type="submit" class="btn btn-primary">Save</button>
-                      </div>
-                  </form>
-              </div>
-              <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              </div>
-          </div>
-      </div>
-  </div>
-  <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
-          <div class="modal-content">
-              <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabel">Update Country</h5>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-              </div>
-              <div class="modal-body">
-                  <form th:action="@{/countries/update}"  method="put">
-                      <div class="form-group">
-                          <label for="idEdit" class="col-form-label">Id:</label>
-                          <input type="text" class="form-control" id="idEdit" name="id" readonly>
-                      </div>
-                      <div class="form-group">
-                          <label for="descriptionEdit" class="col-form-label">Description:</label>
-                          <input type="text" class="form-control" id="descriptionEdit" name="description">
-                      </div>
-                      <div class="form-group">
-                          <label for="capitalEdit" class="col-form-label">Capital:</label>
-                          <input type="text" class="form-control" id="capitalEdit" name="capital">
-                      </div>
-                      <div class="form-group">
-                          <label for="codeEdit" class="col-form-label">Code:</label>
-                          <input type="text" class="form-control" id="codeEdit" name="code">
-                      </div>
-                      <div class="form-group">
-                          <label for="nationalityEdit" class="col-form-label">Nationality:</label>
-                          <input type="text" class="form-control" id="nationalityEdit" name="nationality">
-                      </div>
-                      <div class="form-group">
-                          <label for="continentEdit" class="col-form-label">Continent:</label>
-                          <input type="text" class="form-control" id="continentEdit" name="continent">
-                      </div>
-                      <div class="form-group">
-                          <button type="submit" class="btn btn-primary">Submit</button>
-                      </div>
-                  </form>
-              </div>
-              <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal" >Close</button>
-              </div>
-          </div>
-      </div>
-  </div>
+
   <div class="modal" tabindex="-1" id="deleteModal">
       <div class="modal-dialog">
           <div class="modal-content">
@@ -563,6 +476,111 @@
           </div>
       </div>
   </div>
+  <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">New Role</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                  <form th:action="@{/role/addnew}"  method="post">
+                      <div class="form-group">
+                          <label for="description" class="col-form-label">Description:</label>
+                          <input type="text" class="form-control" id="description" name="description">
+                      </div>
+                      <div class="form-group">
+                          <label for="details" class="col-form-label">Details:</label>
+                          <input type="text" class="form-control" id="details" name="details">
+                      </div>
+                      <div class="form-group">
+                          <button type="submit" class="btn btn-primary">Save</button>
+                      </div>
+                  </form>
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              </div>
+          </div>
+      </div>
+  </div>
+  <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Update Role</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                  <form th:action="@{/role/update}"  method="put">
+                      <div class="form-group">
+                          <label for="editid" class="col-form-label">Id:</label>
+                          <input type="text" class="form-control" id="editid" name="id" readonly>
+                      </div>
+                      <div class="form-group">
+                          <label for="editdescription" class="col-form-label">Description:</label>
+                          <input type="text" class="form-control" id="editdescription" name="description">
+                      </div>
+                      <div class="form-group">
+                          <label for="editdetails" class="col-form-label">Details:</label>
+                          <input type="text" class="form-control" id="editdetails" name="details">
+                      </div>
+                      <div class="form-group">
+                          <button type="submit" class="btn btn-primary">Save</button>
+                      </div>
+                  </form>
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal" >Close</button>
+              </div>
+          </div>
+      </div>
+  </div>
+  <div class="modal fade" id="detailsModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Details Role</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                  <form th:action="@{/role/update}"  method="put">
+                      <div class="form-group">
+                          <label for="detailsid" class="col-form-label">Id:</label>
+                          <input type="text" class="form-control" id="detailsid" name="id" readonly>
+                      </div>
+                      <div class="form-group">
+                          <label for="detailsdescription" class="col-form-label">Description:</label>
+                          <input type="text" class="form-control" id="detailsdescription" name="description">
+                      </div>
+                      <div class="form-group">
+                          <label for="detailsdetails" class="col-form-label">Details:</label>
+                          <input type="text" class="form-control" id="detailsdetails" name="details">
+                      </div>
+                      <div class="form-group">
+                          <label for="createdBy" class="col-form-label">Created By:</label>
+                          <input type="text" class="form-control" id="createdBy" name="createdBy">
+                      </div>
+                      <div class="form-group">
+                          <label for="createdDate" class="col-form-label">Created On:</label>
+                          <input type="text" class="form-control" id="createdDate" name="createdDate">
+                      </div>
+                      <div class="form-group">
+                          <label for="lastModifiedBy" class="col-form-label">Last Updated By:</label>
+                          <input type="text" class="form-control" id="lastModifiedBy" name="lastModifiedBy">
+                      </div>
+                      <div class="form-group">
+                          <label for="lastModifiedDate" class="col-form-label">Last Updated On:</label>
+                          <input type="text" class="form-control" id="lastModifiedDate" name="lastModifiedDate">
+                      </div>
+                  </form>
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal" >Close</button>
+              </div>
+          </div>
+      </div>
+  </div>
   <!-- container section end -->
   <!-- javascripts -->
   <script src="js/jquery.js"></script>
@@ -572,6 +590,8 @@
   <script src="js/jquery.nicescroll.js" type="text/javascript"></script>
   <!--custome script for all page-->
   <script src="js/scripts.js"></script>
-<script src="js/Country.js"></script>
+<script src="js/role.js"></script>
+
 </body>
+
 </html>

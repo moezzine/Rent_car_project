@@ -29,6 +29,7 @@ $('table #editButtonemployee').on('click',function(event){
         $('#editmaritalStatus').val(c1.maritalStatus);
         $('#editinitials').val(c1.initials);
         $('#editmobile').val(c1.mobile);
+        $('#txtUsernameEdit').val(employee.username);
 
     });
     $('#editModal').modal();

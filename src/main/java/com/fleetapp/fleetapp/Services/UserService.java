@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class UserService {
     @Autowired
@@ -16,5 +18,11 @@ public class UserService {
     public  void save(User user) {
         user.setPassword(encoder.encode(user.getPassword()));
         userRepository.save(user);
+    }
+    public void delete(Integer id) {
+        userRepository.deleteById(id);
+    }
+    public Optional<User> getById(int id) {
+        return  userRepository.findById(id);
     }
 }

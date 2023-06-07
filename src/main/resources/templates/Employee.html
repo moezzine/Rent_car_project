@@ -419,6 +419,7 @@
                       <tr>
 
                           <th></th>
+                          <th>Username</th>
                           <th>Id</th>
                           <th>Fullname</th>
                           <th>Hire Date</th>
@@ -434,6 +435,7 @@
                           <img th:src="@{'/img/photo/'+${v.id}+'.jpg'}" width="40" height="40">
                           </a>
                           </td>
+                          <td><a th:text="${v.username} ?: 'Check'" th:href="@{/employee/assginusername/(id=${v.id})}"></a></td>
                           <td th:text="${v.id}"></td>
                           <td th:text="${v.firstname}+' '+${v.lastname}"></td>
                           <td th:text="${v.hireDate}"></td>
@@ -754,6 +756,9 @@
                                               th:text="${vec.description}">
                                       </option>
                                   </select>
+                              </div>
+                              <div>
+                              <input type="hidden" id="txtUsernameEdit" name="username">
                               </div>
                           </div>
                       </div>

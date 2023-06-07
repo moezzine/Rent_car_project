@@ -410,7 +410,46 @@
           </div>
         </div>
         <!-- page start-->
-      <h1>User</h1>
+          <div class="row">
+              <div class="col-lg-12">
+                  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addModal">New employee</button>
+                  <table class="table">
+                      <thead>
+                      <tr>
+
+                          <th></th>
+                          <th>Firstname</th>
+                          <th>Lastname</th>
+                          <th>Username</th>
+                          <th>Action</th>
+                          <th></th>
+
+                      </tr>
+                      </thead>
+                      <tbody>
+                      <tr th:each="v:${user}">
+
+                          <td th:text="${v.id}"></td>
+                          <td th:text="${v.firstname}"></td>
+                          <td th:text="${v.lastname}"></td>
+                          <td th:text="${v.username}"></td>
+                          <td th:text="${v.hireDate}"></td>
+                          <td><a  th:href="@{'/security/user/Edit/'+${user.id}}"
+                                  class="btn btn-primary"><i class="icon_pencil-edit"></i>Manage Roles</a></td>
+                          <td class="btn-group">
+                              <a th:href="@{user/findById/(id=${v.id})}" class="btn btn-primary" id="editButtonuser"><i class="icon_pencil-edit"></i></a>
+                          </td>
+                          <td class="btn-group">
+                              <a  th:href="@{user/findById/(id=${v.id})}" class="btn btn-success" id="detailsButtonuser"><i class="icon_document_alt"></i></a>
+                          </td>
+                          <td class="btn-group">
+                              <a th:href="@{user/delete/(id=${v.id})}"  class="btn btn-danger" id="deleteButtonuser"><i class="icon_close_alt2"></i></a>
+                          </td>
+                      </tr>
+                      </tbody>
+                  </table>
+              </div>
+          </div>
         <!-- page end-->
       </section>
     </section>
@@ -423,10 +462,149 @@
             Licensing information: https://bootstrapmade.com/license/
             Purchase the pro version form: https://bootstrapmade.com/buy/?theme=NiceAdmin
           -->
-          Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+          Designed by <a href="https://bootstrapmade.com/">Moez EZZINE</a>
         </div>
     </div>
   </section>
+  <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+          <div class="modal-content" style="width:900px">
+              <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">New user </h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                  <form th:action="@{/user/addnew}"  method="post">
+                      <div class="row">
+                          <div class="col-md-6">
+                              <div class="form-group">
+                                  <label for="id" class="col-form-label">Id:</label>
+                                  <input type="text" class="form-control" id="id" name="id" readonly>
+                              </div>
+
+                              <div class="form-group">
+                                  <label for="initials" class="col-form-label">Name:</label>
+                                  <input type="text" class="form-control" id="initials" name="initials" >
+                              </div>
+                              <div class="form-group">
+                                  <label for="socialSecurityNumber" class="col-form-label">:</label>
+                                  <input type="text" class="form-control" id="socialSecurityNumber" name="socialSecurityNumber" >
+                              </div>
+                              <div class="form-group">
+                                  <label for="firstname" class="col-form-label">firstname:</label>
+                                  <input type="text" class="form-control" id="firstname" name="firstname" >
+                              </div>
+                              <div class="form-group">
+                                  <label for="lastname" class="col-form-label">lastname:</label>
+                                  <input type="text" class="form-control" id="lastname" name="lastname" >
+                              </div>
+                              <div class="form-group">
+                                  <label for="othername" class="col-form-label">othername:</label>
+                                  <input type="text" class="form-control" id="othername" name="othername" >
+                              </div>
+                              <div class="form-group row">
+                                  <label for="gender" class="col-form-label ">Gender:</label>
+                                  <div class="col">
+                                      <select class="form-control" id="gender" name="gender" >
+                                          <option>-SELECT-</option>
+                                          <option value="Male">Male</option>
+                                          <option value="Female">Female</option>
+                                      </select>
+                                  </div>
+                              </div>
+                              <div class="form-group">
+                                  <label for="countryid" class="col-form-label">Nationality:</label>
+                                  <select class="form-control" id="countryid" name="countryid" >
+                                      <option>-SELECT-</option>
+                                      <option th:each="vec:${countries}"
+                                              th:value="${vec.id}"
+                                              th:text="${vec.description}">
+                                      </option>
+                                  </select>
+                              </div>
+                              <div class="form-group">
+                                  <label for="address" class="col-form-label">Adress:</label>
+                                  <input type="text" class="form-control" id="address" name="address" >
+                              </div>
+                          </div>
+                          <div class="col-md-6">
+                              <div class="form-group">
+                                  <label for="dateOfBirth" class="col-form-label">date Of Birth:</label>
+                                  <input type="date" class="form-control" id="dateOfBirth" name="dateOfBirth" >
+                              </div>
+                              <div class="form-group">
+                                  <label for="hireDate" class="col-form-label">hire Date:</label>
+                                  <input type="date" class="form-control" id="hireDate" name="hireDate" >
+                              </div>
+                              <div class="form-group">
+                                  <label for="stateid" class="col-form-label">State/Province:</label>
+                                  <select class="form-control" id="stateid" name="stateid" >
+                                      <option>-SELECT-</option>
+                                      <option th:each="vec:${states}"
+                                              th:value="${vec.id}"
+                                              th:text="${vec.name}">
+                                      </option>
+                                  </select>
+                              </div>
+                              <div class="form-group">
+                                  <label for="city" class="col-form-label">City:</label>
+                                  <input type="text" class="form-control" id="city" name="city" >
+                              </div>
+                              <div class="form-group">
+                                  <label for="phone" class="col-form-label">Phone:</label>
+                                  <input type="text" class="form-control" id="phone" name="phone" >
+                              </div>
+                              <div class="form-group">
+                                  <label for="mobile" class="col-form-label">Mobile:</label>
+                                  <input type="text" class="form-control" id="mobile" name="mobile" >
+                              </div>
+                              <div class="form-group row">
+                                  <label for="maritalStatus" class="col-form-label">marital Status:</label>
+                                  <div class="col">
+                                      <select class="form-control" id="maritalStatus" name="maritalStatus" >
+                                          <option>-SELECT-</option>
+                                          <option value="Married">Married</option>
+                                          <option value="Single">Single</option>
+                                      </select>
+                                  </div>
+                              </div>
+                              <div class="form-group">
+                                  <label for="email" class="col-form-label">email:</label>
+                                  <input type="text" class="form-control" id="email" name="email" >
+                              </div>
+                              <div class="form-group">
+                                  <label for="jobtitleid" class="col-form-label">Job Title:</label>
+                                  <select class="form-control" id="jobtitleid" name="jobtitleid" >
+                                      <option>-SELECT-</option>
+                                      <option th:each="vec:${jobTitles}"
+                                              th:value="${vec.id}"
+                                              th:text="${vec.description}">
+                                      </option>
+                                  </select>
+                              </div>
+                              <div class="form-group">
+                                  <label for="employeetypeid" class="col-form-label">Employee Type:</label>
+                                  <select class="form-control" id="employeetypeid" name="employeetypeid" >
+                                      <option>-SELECT-</option>
+                                      <option th:each="vec:${employeeTypes}"
+                                              th:value="${vec.id}"
+                                              th:text="${vec.description}">
+                                      </option>
+                                  </select>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="form-group">
+                          <button type="submit" class="btn btn-primary">Save</button>
+                      </div>
+                  </form>
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              </div>
+          </div>
+      </div>
+  </div>
   <!-- container section end -->
   <!-- javascripts -->
   <script src="js/jquery.js"></script>
